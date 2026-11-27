@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>曲谱同步 · 原谱总谱与 Tonnetz</title>
+<meta name="description" content="MusicXML / MXL 原谱总谱同步：Verovio 原生谱面、固定阅读线、连续横向流动、Tonnetz 四部和声、功能和弦进行与 1080P 视频导出。">
+<link rel="stylesheet" href="studio/light.css">
+<link rel="icon" href="studio/studio-icon.png">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-row">
+    <div class="brand">
+      <span class="mark" aria-hidden="true"><i></i></span>
+      <div><strong>曲谱同步</strong><small>SCORE SYNC · TONNETZ</small></div>
+    </div>
+    <div class="fileinfo">
+      <strong id="fileName">sync (7)</strong>
+      <small id="fileMeta">正在载入总谱…</small>
+    </div>
+    <div class="top-actions">
+      <span class="pill" id="statusPill">载入中</span>
+      <button id="openBtn">打开曲谱</button>
+      <button id="videoUploadBtn">上传视频</button>
+      <button id="helpBtn">说明</button>
+    </div>
+  </div>
+  <div class="options">
+    <span class="opt-title">分析</span>
+    <label class="check"><input type="radio" name="analysisMode" value="auto" checked><span>自动分析</span></label>
+    <label class="check"><input type="radio" name="analysisMode" value="tonal"><span>调性</span></label>
+    <label class="check"><input type="radio" name="analysisMode" value="atonal"><span>无调性</span></label>
+    <span class="opt-sep"></span>
+    <span class="opt-title">显示</span>
+    <label class="check"><input type="checkbox" id="namingToggle"><span>级数版本 0–11</span></label>
+    <label class="check"><input type="checkbox" id="satbToggle"><span>四部和声</span></label>
+    <label class="check"><input type="checkbox" id="circleFifths" checked><span>五度圈</span></label>
+    <label class="check"><input type="checkbox" id="circleChromatic"><span>12 平均律圈</span></label>
+    <span class="opt-grow"></span>
+    <span class="legend"><i class="t">T</i> 主 <i class="s">S</i> 下属 <i class="d">D</i> 属</span>
+    <span class="legend-blue">蓝色阅读线 35%</span>
+  </div>
+</header>
+
+<main class="main">
+  <div class="stage-card" id="stageFrame">
+    <canvas id="stage" width="1920" height="1080" aria-label="原谱总谱同步舞台"></canvas>
+    <div class="stage-hint" id="stageHint">正在载入 sync (7).mxl…</div>
+    <div class="record-overlay" id="recordOverlay" hidden>
+      <h3>正在录制总谱视频</h3>
+      <div class="t" id="recordLabel">录制中 · 0:00</div>
+      <div class="bar"><i id="recordFill"></i></div>
+      <div class="t" id="recordSpec">录制期间请保持本页在前台 · 1920×1080 / 30fps</div>
+      <button id="cancelRecord">取消录制</button>
+    </div>
+  </div>
+
+  <div class="transport">
+    <button class="play" id="playBtn" title="播放 / 暂停（空格）" aria-label="播放">
+      <span class="play-icon">▶</span>
+    </button>
+    <button class="round" id="restartBtn" title="回到开头">↺</button>
+    <div class="timeline">
+      <span class="t" id="curTime">00:00</span>
+      <input id="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="播放进度">
+      <span class="t" id="durTime">00:00</span>
+    </div>
+    <div class="volume">
+      <span>音量</span>
+      <input id="volume" type="range" min="0" max="100" value="80" aria-label="音量">
+    </div>
+    <span class="divider"></span>
+    <label class="sel">分辨率
+      <select id="resSel">
+        <option value="1080" selected>1920×1080</option>
+        <option value="1440">2560×1440</option>
+        <option value="2160">3840×2160</option>
+      </select>
+    </label>
+    <label class="sel">视频时长
+      <select id="videoLen">
+        <option value="30">30 秒</option>
+        <option value="60" selected>60 秒</option>
+        <option value="120">120 秒</option>
+        <option value="0">全曲</option>
+      </select>
+    </label>
+    <button class="blue" id="videoBtn" disabled>导出视频</button>
+    <button id="saveVideoBtn" hidden>保存最近视频</button>
+    <button id="shotBtn" disabled>截图</button>
+    <button id="fullBtn">全屏</button>
+  </div>
+</main>
+
+<footer class="foot">
+  <span>曲谱同步 · 原谱总谱 / Tonnetz</span>
+  <span>·</span>
+  <span>固定阅读线 35% · 全声部连续横向流动</span>
+  <span class="grow"></span>
+  <span>本地运行 · 实时合成 · 无外部网络</span>
+</footer>
+
+<input type="file" id="fileInput" accept=".mxl,.musicxml,.xml" hidden>
+<input type="file" id="videoInput" accept="video/*" hidden>
+<div id="toast"></div>
+<div id="modalRoot"></div>
+
+<script type="module" src="studio/app-light.js"></script>
+</body>
+</html>

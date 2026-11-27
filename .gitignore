@@ -1,0 +1,19 @@
+# runtime / local
+.runtime/
+*.log
+*.pid
+*.tmp
+
+# demo & exports
+exports/
+demo/
+*.mp4
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# editors
+.vscode/
+.idea/
